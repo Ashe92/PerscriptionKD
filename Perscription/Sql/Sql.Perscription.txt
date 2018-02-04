@@ -1,0 +1,73 @@
+CREATE TABLE [dbo].[Level] (
+    [IdLevel]     INT   PRIMARY KEY IDENTITY NOT NULL,
+    [Level]       VARCHAR (50)  NULL,
+    [Description] VARCHAR (300) NULL
+);
+
+CREATE TABLE [dbo].[Doctor] (
+    [IdDoctor]     INT          NOT NULL PRIMARY KEY  IDENTITY,
+    [PESEL]        NCHAR (11)   NOT NULL,
+    [ProfessionNo] INT          NOT NULL,
+    [Name]        VARCHAR (50) NULL,
+    [Surname]      VARCHAR (50) NULL
+);
+
+CREATE TABLE [dbo].[Medicine] (
+    [BL7]        INT           NOT NULL PRIMARY KEY,
+    [EAN]        INT           NOT NULL,
+    [Psychotrop] BIT           DEFAULT ((0)) NOT NULL,
+    [Senior]     BIT           DEFAULT ((0)) NOT NULL,
+    [Vaccine]    BIT           DEFAULT ((0)) NOT NULL,
+    [Cost]       DECIMAL (18)  NOT NULL,
+    [Name]       VARCHAR (250) NOT NULL,
+    [NameInt]    VARCHAR (100) NOT NULL,
+    [Form]       VARCHAR (100) NULL,
+    [Dose]       VARCHAR (100) NOT NULL,
+    [Wrapping]   VARCHAR (100) NULL
+);
+COMMIT; 
+
+CREATE TABLE [dbo].[Patient]
+(
+	[IdPatient] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [Name] VARCHAR(50) NOT NULL, 
+    [Surname] VARCHAR(50) NOT NULL, 
+    [PESEL] INT NOT NULL, 
+    [Birthday] DATE NOT NULL, 
+    [Adddres] VARCHAR(250) NULL
+)
+COMMIT;
+
+
+CREATE TABLE [dbo].[Refundation] (
+	[IdRefundation] INT IDENTITY PRIMARY KEY NOT NULL,
+    [IdMedicine] INT NOT NULL,
+    [IdLevel]    INT NOT NULL,
+    CONSTRAINT [FK_Refundation_Medicine] FOREIGN KEY ([IdMedicine]) REFERENCES [dbo].[Medicine] ([BL7]),
+    CONSTRAINT [FK_Refundation_Level] FOREIGN KEY ([IdLevel]) REFERENCES [dbo].[Level] ([IdLevel])
+);
+COMMIT;
+
+CREATE TABLE [dbo].[DoctorRecep] (
+    [IdReceiptNo]   INT NOT NULL PRIMARY KEY IDENTITY ,
+    [IdDoctor]      INT NOT NULL,
+    [ReceiptNumber] IMAGE        NULL,
+    [ReceiptType]   VARCHAR (10) NULL,
+    [ReceiptCat]    VARCHAR (10) NULL 
+    CONSTRAINT [FK_DoctorRecep_Doctor] FOREIGN KEY (IdDoctor) REFERENCES Doctor(IdDoctor)
+);
+COMMIT;
+CREATE TABLE [dbo].[Perscript]
+(
+	[IdReceipt] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [IdReceiptNo] INT NOT NULL, 
+    [IdPatient] INT NOT NULL, 
+    [IdMedicine] INT NOT NULL, 
+    CONSTRAINT [FK_Perscription_Receipt] FOREIGN KEY (IdReceiptNo) REFERENCES DoctorRecep(IdReceiptNo), 
+    CONSTRAINT [FK_Perscription_Patient] FOREIGN KEY (IdPatient) REFERENCES Patient(IdPatient), 
+    CONSTRAINT [FK_Perscription_Med] FOREIGN KEY (IdMedicine) REFERENCES Medicine(BL7)
+)
+COMMIT;
+
+COMMIT;
+

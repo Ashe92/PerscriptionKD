@@ -1,0 +1,53 @@
+﻿<Window x:Class="Perscription.MedicineWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Perscription"
+        mc:Ignorable="d"
+        Title="MedicineWin" Height="527.586" Width="603.762" Loaded="Window_Loaded">
+    <Window.Resources>
+        <local:PerscriptionDataSet x:Key="perscriptionDataSet"/>
+        <CollectionViewSource x:Key="medicineViewSource" Source="{Binding Medicine, Source={StaticResource perscriptionDataSet}}"/>
+        <CollectionViewSource x:Key="levelViewSource" Source="{Binding Level, Source={StaticResource perscriptionDataSet}}"/>
+    </Window.Resources>
+    <Grid Margin="0,0,2,0">
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="30" />
+            <RowDefinition  Height="2*" />
+            <RowDefinition  Height="*" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="btLoad" Grid.Column="2" Grid.Row="0" Content="Load Form Xml" Width="150" Height="25" Click="LoadFromXml" Margin="38,0,10,5"/>
+        <Button x:Name="btnOk" Grid.Row="3" Grid.Column="2" Margin="20,2" Content="OK" Click="btnOk_Click"/>
+        <DataGrid x:Name="medicineDataGrid" Grid.Row="1"  Grid.ColumnSpan="3" AutoGenerateColumns="True"/>
+        <!--<DataGrid x:Name="medicineDataGrid" AutoGenerateColumns="False" Grid.ColumnSpan="3" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource medicineViewSource}}" Margin="0,0,0,10" Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="bL7Column" Binding="{Binding BL7}" Header="BL 7" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="eANColumn" Binding="{Binding EAN}" Header="EAN" Width="SizeToHeader"/>
+                <DataGridCheckBoxColumn x:Name="psychotropColumn" Binding="{Binding Psychotrop}" Header="Psychotrop" Width="SizeToHeader"/>
+                <DataGridCheckBoxColumn x:Name="seniorColumn" Binding="{Binding Senior}" Header="Senior" Width="SizeToHeader"/>
+                <DataGridCheckBoxColumn x:Name="vaccineColumn" Binding="{Binding Vaccine}" Header="Vaccine" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="costColumn" Binding="{Binding Cost}" Header="Cost" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="nameIntColumn" Binding="{Binding NameInt}" Header="Name Int" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="formColumn" Binding="{Binding Form}" Header="Form" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="doseColumn" Binding="{Binding Dose}" Header="Dose" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="wrappingColumn" Binding="{Binding Wrapping}" Header="Wrapping" Width="SizeToHeader"/>
+                <DataGridCheckBoxColumn x:Name="usedColumn" Binding="{Binding Used}" Header="Used" Width="SizeToHeader"/>
+            </DataGrid.Columns>
+        </DataGrid>-->
+        <DataGrid x:Name="levelDataGrid" AutoGenerateColumns="False" Grid.ColumnSpan="3" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource levelViewSource}}" Margin="0,5,0,3" Grid.Row="2" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="idLevelColumn" Binding="{Binding IdLevel}" Header="Id Level" IsReadOnly="True" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="levelNameColumn" Binding="{Binding LevelName}" Header="Level Name" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="descriptionColumn" Binding="{Binding Description}" Header="Description" Width="SizeToHeader"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

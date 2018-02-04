@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PerscriptionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="PerscriptionEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Doctor" EntityType="PerscriptionModel.Doctor" />
+    <EntitySet Name="DoctorRecep" EntityType="PerscriptionModel.DoctorRecep" />
+    <EntitySet Name="Level" EntityType="PerscriptionModel.Level" />
+    <EntitySet Name="Medicine" EntityType="PerscriptionModel.Medicine" />
+    <EntitySet Name="Patient" EntityType="PerscriptionModel.Patient" />
+    <EntitySet Name="Perscript" EntityType="PerscriptionModel.Perscript" />
+    <AssociationSet Name="DoctorRecepDoctor" Association="PerscriptionModel.FK_DoctorRecepDoctor">
+      <End Role="DoctorRecep" EntitySet="DoctorRecep" />
+      <End Role="Doctor" EntitySet="Doctor" />
+    </AssociationSet>
+    <AssociationSet Name="PerscriptMedicine" Association="PerscriptionModel.PerscriptMedicine">
+      <End Role="Perscript" EntitySet="Perscript" />
+      <End Role="Medicine" EntitySet="Medicine" />
+    </AssociationSet>
+    <AssociationSet Name="PerscriptDoctorRecep" Association="PerscriptionModel.PerscriptDoctorRecep">
+      <End Role="Perscript" EntitySet="Perscript" />
+      <End Role="DoctorRecep" EntitySet="DoctorRecep" />
+    </AssociationSet>
+    <AssociationSet Name="PerscriptPatient" Association="PerscriptionModel.PerscriptPatient">
+      <End Role="Perscript" EntitySet="Perscript" />
+      <End Role="Patient" EntitySet="Patient" />
+    </AssociationSet>
+    <AssociationSet Name="MedicineLevel" Association="PerscriptionModel.MedicineLevel">
+      <End Role="Medicine" EntitySet="Medicine" />
+      <End Role="Level" EntitySet="Level" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Doctor">
+    <Key>
+      <PropertyRef Name="IdDoctor" />
+    </Key>
+    <Property Name="IdDoctor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PESEL" Type="String" Nullable="false" MaxLength="11" FixedLength="true" Unicode="true" />
+    <Property Name="ProfessionNo" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="DoctorRecep" Relationship="PerscriptionModel.FK_DoctorRecepDoctor" FromRole="Doctor" ToRole="DoctorRecep" />
+  </EntityType>
+  <EntityType Name="DoctorRecep">
+    <Key>
+      <PropertyRef Name="IdReceiptNo" />
+    </Key>
+    <Property Name="IdReceiptNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ReceiptNumber" Type="Int64" />
+    <Property Name="ReceiptType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="ReceiptCat" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Doctor" Relationship="PerscriptionModel.FK_DoctorRecepDoctor" FromRole="DoctorRecep" ToRole="Doctor" />
+    <Property Name="IdDoctor" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Perscript" Relationship="PerscriptionModel.PerscriptDoctorRecep" FromRole="DoctorRecep" ToRole="Perscript" />
+  </EntityType>
+  <EntityType Name="Level">
+    <Key>
+      <PropertyRef Name="IdLevel" />
+    </Key>
+    <Property Name="IdLevel" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LevelName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Medicine" Relationship="PerscriptionModel.MedicineLevel" FromRole="Level" ToRole="Medicine" />
+    <Property Name="MedicineBL7" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Medicine">
+    <Key>
+      <PropertyRef Name="BL7" />
+    </Key>
+    <Property Name="BL7" Type="Int32" Nullable="false" />
+    <Property Name="EAN" Type="Int64" Nullable="false" />
+    <Property Name="Psychotrop" Type="Boolean" Nullable="false" DefaultValue="false" />
+    <Property Name="Senior" Type="Boolean" Nullable="false" DefaultValue="false" />
+    <Property Name="Vaccine" Type="Boolean" Nullable="false" DefaultValue="false" />
+    <Property Name="Cost" Type="Decimal" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="NameInt" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Form" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Dose" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Wrapping" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Perscript" Relationship="PerscriptionModel.PerscriptMedicine" FromRole="Medicine" ToRole="Perscript" />
+    <Property Name="Used" Type="Boolean" Nullable="false" DefaultValue="false" />
+    <NavigationProperty Name="Level" Relationship="PerscriptionModel.MedicineLevel" FromRole="Medicine" ToRole="Level" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="IdPatient" />
+    </Key>
+    <Property Name="IdPatient" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Surname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PESEL" Type="String" Nullable="false" />
+    <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Adddres" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Perscript" Relationship="PerscriptionModel.PerscriptPatient" FromRole="Patient" ToRole="Perscript" />
+  </EntityType>
+  <EntityType Name="Perscript">
+    <Key>
+      <PropertyRef Name="IdReceipt" />
+    </Key>
+    <Property Name="IdReceipt" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Medicine" Relationship="PerscriptionModel.PerscriptMedicine" FromRole="Perscript" ToRole="Medicine" />
+    <NavigationProperty Name="DoctorRecep" Relationship="PerscriptionModel.PerscriptDoctorRecep" FromRole="Perscript" ToRole="DoctorRecep" />
+    <NavigationProperty Name="Patient" Relationship="PerscriptionModel.PerscriptPatient" FromRole="Perscript" ToRole="Patient" />
+  </EntityType>
+  <Association Name="FK_DoctorRecepDoctor">
+    <End Type="PerscriptionModel.DoctorRecep" Role="DoctorRecep" Multiplicity="*" />
+    <End Type="PerscriptionModel.Doctor" Role="Doctor" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="IdDoctor" />
+      </Principal>
+      <Dependent Role="DoctorRecep">
+        <PropertyRef Name="IdDoctor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PerscriptMedicine">
+    <End Type="PerscriptionModel.Perscript" Role="Perscript" Multiplicity="*" />
+    <End Type="PerscriptionModel.Medicine" Role="Medicine" Multiplicity="*" />
+  </Association>
+  <Association Name="PerscriptDoctorRecep">
+    <End Type="PerscriptionModel.Perscript" Role="Perscript" Multiplicity="1" />
+    <End Type="PerscriptionModel.DoctorRecep" Role="DoctorRecep" Multiplicity="1" />
+  </Association>
+  <Association Name="PerscriptPatient">
+    <End Type="PerscriptionModel.Perscript" Role="Perscript" Multiplicity="*" />
+    <End Type="PerscriptionModel.Patient" Role="Patient" Multiplicity="1" />
+  </Association>
+  <Association Name="MedicineLevel">
+    <End Type="PerscriptionModel.Medicine" Role="Medicine" Multiplicity="1" />
+    <End Type="PerscriptionModel.Level" Role="Level" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medicine">
+        <PropertyRef Name="BL7" />
+      </Principal>
+      <Dependent Role="Level">
+        <PropertyRef Name="MedicineBL7" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

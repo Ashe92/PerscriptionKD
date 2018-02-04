@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PerscriptionModelStoreContainer" CdmEntityContainer="PerscriptionEntities">
+    <EntitySetMapping Name="Doctor">
+      <EntityTypeMapping TypeName="IsTypeOf(PerscriptionModel.Doctor)">
+        <MappingFragment StoreEntitySet="Doctor">
+          <ScalarProperty Name="IdDoctor" ColumnName="IdDoctor" />
+          <ScalarProperty Name="PESEL" ColumnName="PESEL" />
+          <ScalarProperty Name="ProfessionNo" ColumnName="ProfessionNo" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DoctorRecep">
+      <EntityTypeMapping TypeName="IsTypeOf(PerscriptionModel.DoctorRecep)">
+        <MappingFragment StoreEntitySet="DoctorRecep">
+          <ScalarProperty Name="IdReceiptNo" ColumnName="IdReceiptNo" />
+          <ScalarProperty Name="ReceiptNumber" ColumnName="ReceiptNumber" />
+          <ScalarProperty Name="ReceiptType" ColumnName="ReceiptType" />
+          <ScalarProperty Name="ReceiptCat" ColumnName="ReceiptCat" />
+          <ScalarProperty Name="IdDoctor" ColumnName="IdDoctor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Level">
+      <EntityTypeMapping TypeName="IsTypeOf(PerscriptionModel.Level)">
+        <MappingFragment StoreEntitySet="Level">
+          <ScalarProperty Name="IdLevel" ColumnName="IdLevel" />
+          <ScalarProperty Name="LevelName" ColumnName="LevelName" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="MedicineBL7" ColumnName="MedicineBL7" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Medicine">
+      <EntityTypeMapping TypeName="IsTypeOf(PerscriptionModel.Medicine)">
+        <MappingFragment StoreEntitySet="Medicine">
+          <ScalarProperty Name="BL7" ColumnName="BL7" />
+          <ScalarProperty Name="EAN" ColumnName="EAN" />
+          <ScalarProperty Name="Psychotrop" ColumnName="Psychotrop" />
+          <ScalarProperty Name="Senior" ColumnName="Senior" />
+          <ScalarProperty Name="Vaccine" ColumnName="Vaccine" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="NameInt" ColumnName="NameInt" />
+          <ScalarProperty Name="Form" ColumnName="Form" />
+          <ScalarProperty Name="Dose" ColumnName="Dose" />
+          <ScalarProperty Name="Wrapping" ColumnName="Wrapping" />
+          <ScalarProperty Name="Used" ColumnName="Used" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Patient">
+      <EntityTypeMapping TypeName="IsTypeOf(PerscriptionModel.Patient)">
+        <MappingFragment StoreEntitySet="Patient">
+          <ScalarProperty Name="IdPatient" ColumnName="IdPatient" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="PESEL" ColumnName="PESEL" />
+          <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+          <ScalarProperty Name="Adddres" ColumnName="Adddres" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Perscript">
+      <EntityTypeMapping TypeName="IsTypeOf(PerscriptionModel.Perscript)">
+        <MappingFragment StoreEntitySet="Perscript">
+          <ScalarProperty Name="IdReceipt" ColumnName="IdReceipt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="PerscriptMedicine" TypeName="PerscriptionModel.PerscriptMedicine" StoreEntitySet="PerscriptMedicine">
+      <EndProperty Name="Perscript">
+        <ScalarProperty Name="IdReceipt" ColumnName="Perscript_IdReceipt" />
+      </EndProperty>
+      <EndProperty Name="Medicine">
+        <ScalarProperty Name="BL7" ColumnName="Medicine_BL7" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PerscriptDoctorRecep" TypeName="PerscriptionModel.PerscriptDoctorRecep" StoreEntitySet="Perscript">
+      <EndProperty Name="DoctorRecep">
+        <ScalarProperty Name="IdReceiptNo" ColumnName="DoctorRecep_IdReceiptNo" />
+      </EndProperty>
+      <EndProperty Name="Perscript">
+        <ScalarProperty Name="IdReceipt" ColumnName="IdReceipt" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PerscriptPatient" TypeName="PerscriptionModel.PerscriptPatient" StoreEntitySet="Perscript">
+      <EndProperty Name="Patient">
+        <ScalarProperty Name="IdPatient" ColumnName="Patient_IdPatient" />
+      </EndProperty>
+      <EndProperty Name="Perscript">
+        <ScalarProperty Name="IdReceipt" ColumnName="IdReceipt" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

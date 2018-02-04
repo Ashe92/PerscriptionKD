@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0b76e6f3a61746d0a72b094416d8f67c" Name="Diagram1" ZoomLevel="114">
+        <EntityTypeShape EntityType="PerscriptionModel.Doctor" Width="1.5" PointX="0.5" PointY="5.875" />
+        <EntityTypeShape EntityType="PerscriptionModel.DoctorRecep" Width="1.5" PointX="0.5" PointY="3" />
+        <EntityTypeShape EntityType="PerscriptionModel.Level" Width="1.5" PointX="0.5" PointY="0.5" />
+        <EntityTypeShape EntityType="PerscriptionModel.Medicine" Width="1.5" PointX="5" PointY="0.5" />
+        <EntityTypeShape EntityType="PerscriptionModel.Patient" Width="1.5" PointX="5" PointY="4.625" />
+        <EntityTypeShape EntityType="PerscriptionModel.Perscript" Width="1.5" PointX="2.625" PointY="2.875" />
+        <AssociationConnector Association="PerscriptionModel.FK_DoctorRecepDoctor" />
+        <AssociationConnector Association="PerscriptionModel.PerscriptMedicine" />
+        <AssociationConnector Association="PerscriptionModel.PerscriptDoctorRecep" />
+        <AssociationConnector Association="PerscriptionModel.PerscriptPatient" />
+        <AssociationConnector Association="PerscriptionModel.MedicineLevel" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

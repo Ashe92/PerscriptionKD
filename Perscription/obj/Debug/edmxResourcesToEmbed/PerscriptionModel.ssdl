@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PerscriptionModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="PerscriptionModelStoreContainer">
+    <EntitySet Name="Doctor" EntityType="PerscriptionModel.Store.Doctor" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DoctorRecep" EntityType="PerscriptionModel.Store.DoctorRecep" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Level" EntityType="PerscriptionModel.Store.Level" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Medicine" EntityType="PerscriptionModel.Store.Medicine" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Patient" EntityType="PerscriptionModel.Store.Patient" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Perscript" EntityType="PerscriptionModel.Store.Perscript" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PerscriptMedicine" EntityType="PerscriptionModel.Store.PerscriptMedicine" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="DoctorRecepDoctor" Association="PerscriptionModel.Store.FK_DoctorRecepDoctor">
+      <End Role="DoctorRecep" EntitySet="DoctorRecep" />
+      <End Role="Doctor" EntitySet="Doctor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PerscriptMedicine_Perscript" Association="PerscriptionModel.Store.FK_PerscriptMedicine_Perscript">
+      <End Role="Perscript" EntitySet="Perscript" />
+      <End Role="PerscriptMedicine" EntitySet="PerscriptMedicine" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PerscriptMedicine_Medicine" Association="PerscriptionModel.Store.FK_PerscriptMedicine_Medicine">
+      <End Role="Medicine" EntitySet="Medicine" />
+      <End Role="PerscriptMedicine" EntitySet="PerscriptMedicine" />
+    </AssociationSet>
+    <AssociationSet Name="PerscriptDoctorRecep" Association="PerscriptionModel.Store.PerscriptDoctorRecep">
+      <End Role="Perscript" EntitySet="Perscript" />
+      <End Role="DoctorRecep" EntitySet="DoctorRecep" />
+    </AssociationSet>
+    <AssociationSet Name="PerscriptPatient" Association="PerscriptionModel.Store.PerscriptPatient">
+      <End Role="Perscript" EntitySet="Perscript" />
+      <End Role="Patient" EntitySet="Patient" />
+    </AssociationSet>
+    <AssociationSet Name="MedicineLevel" Association="PerscriptionModel.Store.MedicineLevel">
+      <End Role="Medicine" EntitySet="Medicine" />
+      <End Role="Level" EntitySet="Level" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Doctor">
+    <Key>
+      <PropertyRef Name="IdDoctor" />
+    </Key>
+    <Property Name="IdDoctor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PESEL" Type="nchar" Nullable="false" MaxLength="11" />
+    <Property Name="ProfessionNo" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" Nullable="true" MaxLength="50" />
+    <Property Name="Surname" Type="varchar" Nullable="true" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="DoctorRecep">
+    <Key>
+      <PropertyRef Name="IdReceiptNo" />
+    </Key>
+    <Property Name="IdReceiptNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReceiptNumber" Type="bigint" Nullable="true" />
+    <Property Name="ReceiptType" Type="varchar" Nullable="true" MaxLength="10" />
+    <Property Name="ReceiptCat" Type="varchar" Nullable="true" MaxLength="10" />
+    <Property Name="IdDoctor" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Level">
+    <Key>
+      <PropertyRef Name="IdLevel" />
+    </Key>
+    <Property Name="IdLevel" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LevelName" Type="varchar" Nullable="true" MaxLength="50" />
+    <Property Name="Description" Type="varchar" Nullable="true" MaxLength="300" />
+    <Property Name="MedicineBL7" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Medicine">
+    <Key>
+      <PropertyRef Name="BL7" />
+    </Key>
+    <Property Name="BL7" Type="int" Nullable="false" />
+    <Property Name="EAN" Type="bigint" Nullable="false" />
+    <Property Name="Psychotrop" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="Senior" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="Vaccine" Type="bit" Nullable="false" DefaultValue="false" />
+    <Property Name="Cost" Type="decimal" Nullable="false" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="250" />
+    <Property Name="NameInt" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="Form" Type="varchar" Nullable="true" MaxLength="100" />
+    <Property Name="Dose" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="Wrapping" Type="varchar" Nullable="true" MaxLength="100" />
+    <Property Name="Used" Type="bit" Nullable="false" DefaultValue="false" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="IdPatient" />
+    </Key>
+    <Property Name="IdPatient" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Surname" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="PESEL" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Birthday" Type="datetime" Nullable="false" />
+    <Property Name="Adddres" Type="varchar" Nullable="true" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="Perscript">
+    <Key>
+      <PropertyRef Name="IdReceipt" />
+    </Key>
+    <Property Name="IdReceipt" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DoctorRecep_IdReceiptNo" Type="int" Nullable="false" />
+    <Property Name="Patient_IdPatient" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PerscriptMedicine">
+    <Key>
+      <PropertyRef Name="Perscript_IdReceipt" />
+      <PropertyRef Name="Medicine_BL7" />
+    </Key>
+    <Property Name="Perscript_IdReceipt" Type="int" Nullable="false" />
+    <Property Name="Medicine_BL7" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_DoctorRecepDoctor">
+    <End Role="DoctorRecep" Type="PerscriptionModel.Store.DoctorRecep" Multiplicity="*" />
+    <End Role="Doctor" Type="PerscriptionModel.Store.Doctor" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="IdDoctor" />
+      </Principal>
+      <Dependent Role="DoctorRecep">
+        <PropertyRef Name="IdDoctor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PerscriptDoctorRecep">
+    <End Role="Perscript" Type="PerscriptionModel.Store.Perscript" Multiplicity="*" />
+    <End Role="DoctorRecep" Type="PerscriptionModel.Store.DoctorRecep" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="DoctorRecep">
+        <PropertyRef Name="IdReceiptNo" />
+      </Principal>
+      <Dependent Role="Perscript">
+        <PropertyRef Name="DoctorRecep_IdReceiptNo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PerscriptPatient">
+    <End Role="Perscript" Type="PerscriptionModel.Store.Perscript" Multiplicity="*" />
+    <End Role="Patient" Type="PerscriptionModel.Store.Patient" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="IdPatient" />
+      </Principal>
+      <Dependent Role="Perscript">
+        <PropertyRef Name="Patient_IdPatient" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MedicineLevel">
+    <End Role="Medicine" Type="PerscriptionModel.Store.Medicine" Multiplicity="1" />
+    <End Role="Level" Type="PerscriptionModel.Store.Level" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medicine">
+        <PropertyRef Name="BL7" />
+      </Principal>
+      <Dependent Role="Level">
+        <PropertyRef Name="MedicineBL7" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PerscriptMedicine_Perscript">
+    <End Role="Perscript" Type="PerscriptionModel.Store.Perscript" Multiplicity="1" />
+    <End Role="PerscriptMedicine" Type="PerscriptionModel.Store.PerscriptMedicine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Perscript">
+        <PropertyRef Name="IdReceipt" />
+      </Principal>
+      <Dependent Role="PerscriptMedicine">
+        <PropertyRef Name="Perscript_IdReceipt" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PerscriptMedicine_Medicine">
+    <End Role="PerscriptMedicine" Type="PerscriptionModel.Store.PerscriptMedicine" Multiplicity="*" />
+    <End Role="Medicine" Type="PerscriptionModel.Store.Medicine" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Medicine">
+        <PropertyRef Name="BL7" />
+      </Principal>
+      <Dependent Role="PerscriptMedicine">
+        <PropertyRef Name="Medicine_BL7" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
